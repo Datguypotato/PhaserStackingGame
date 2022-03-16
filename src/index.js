@@ -37,18 +37,20 @@ class MyGame extends Phaser.Scene
             repeat: -1
         });
 
+        var phy = this.physics
         this.input.on('pointerdown', function()
         {
             tween.stop();
 
             console.log(pBox.x + " " + pBox.y)
-            //this.physics.add(100, 100, pBox);
+            phy.add.sprite(pBox.x, pBox.y, 'platform')
         });
 
         var platform = this.physics.add.staticGroup();
         platform.create(400, 550, 'platform');
         this.physics.add.collider(pBox, platform);
     }
+
 
 
     update()
