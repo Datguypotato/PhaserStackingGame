@@ -4,5 +4,57 @@
     <meta charset="utf-8">
   </head>
   <body>
+    <div id="parentStart">
+      <h1>Epic stacking game</h1>
+      <button onclick="Start()">start game</button>
+    </div>
+    <form id="parentRegister" style="display: none">
+      voornaam
+      <br>
+      <input type="text" class="Check">
+      <br>
+      achternaam
+      <br>
+      <input type="text" class="Check">
+      <br>
+      e-mail
+      <br>
+      <input type="text" class="Check">
+      <br>
+      <input id="terms" type="checkbox">
+      agree with the terms and conditions
+      <br>
+      <button type="button" onclick="Register()" >Register</button>
+    </form>
+
+    <script>
+      function Start()
+      {
+        document.getElementById("parentStart").style.display = "none";
+        document.getElementById("parentRegister").style.display = "inline";
+      }
+
+      function Register()
+      {
+        console.log("register button");
+        var parent = document.getElementById("parentRegister").elements
+        
+        for (var i = 0, element; element = parent[i++];) {
+          if (element.type === "text" && element.value === "")
+          {
+            console.log("it's an empty textfield")
+            return;
+          }
+        }
+        if(!document.getElementById("terms").checked){
+          console.log("Checkbox not checked");
+          return;
+        }
+
+        console.log(document.getElementById("terms").checked);
+        document.getElementById("parentRegister").style.display = "none";
+        
+      }
+    </script>
   </body>
 </html>
