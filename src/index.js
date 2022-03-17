@@ -21,7 +21,7 @@ class MyGame extends Phaser.Scene
     {
         super();
     }
-
+    
     preload ()
     {
         this.load.image(textureNames[0] , chickenwing);
@@ -96,7 +96,7 @@ class MyGame extends Phaser.Scene
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'phaser-example',
+    parent: 'game',
     physics: {
         default: 'arcade',
         arcade: {
@@ -106,7 +106,8 @@ const config = {
     },
     width: 800,
     height: 600,
-    scene: MyGame
+    scene: MyGame,
 };
 
-//const game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
+console.log(game)

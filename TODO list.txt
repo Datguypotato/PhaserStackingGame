@@ -6,8 +6,8 @@ click drop object x
 checking score (based on height) x
 
 17/03
-Setup start screen
-inputfield + agree with term and conditions
+Setup start screen x
+inputfield + agree with term and conditions x
 
 18/03
 polishing
