@@ -9,10 +9,9 @@ import pizzaSlice from './assets/sprite-pizza-slice.png';
 import statue from './assets/sprite-statue-of-liberty.png';
 
 var currentObject;
-var groundPlatform
-var inventoryBoxes = []
-var amount = 3;
-var current = 0;
+var groundPlatform;
+var score;
+var amount = 0;
 
 var textureNames = ['chickenwing', "hotdog", "nyp-box", "nyp-pizzabox", "slicer", "sprite-pizza-slice", "sprite-statue-of-liberty"]
 class MyGame extends Phaser.Scene
@@ -38,9 +37,9 @@ class MyGame extends Phaser.Scene
     
     create ()
     {
+
         // create essentials stuff
         var index = Math.floor(Math.random() * textureNames.length);
-        console.log(index);
         currentObject = this.add.image(100, 100, textureNames[index]);
         var tween = this.tweens.add({
             targets: currentObject,
@@ -51,26 +50,55 @@ class MyGame extends Phaser.Scene
         });
         
         groundPlatform = this.physics.add.staticGroup();
-        groundPlatform.create(400, 550, 'platform');
+        groundPlatform.create(400, 550, 'platform').setName("GroundPlatform");
 
-        var stackBlock = this.physics.add.group();
+        var stackBlock = this.physics.add.group()
         var phy = this.physics;
+        var cam = this.cameras.main;
+
+        // TODO add delay
         // input
         this.input.on('pointerdown', function()
         {
-            stackBlock.create(currentObject.x, currentObject.y, currentObject.texture);
+            var newObject = stackBlock.create(currentObject.x, currentObject.y, currentObject.texture);
+            newObject.setName(amount);
+            amount++;
             currentObject.setTexture(textureNames[Math.floor(Math.random() * textureNames.length)]);
 
             phy.add.collider(stackBlock, stackBlock);
-            
+
+            setTimeout(function ()
+            {
+                var highesty = 0;
+
+                stackBlock.children.each(function (child)
+                {
+                    if(highesty < child.y)
+                    {
+                        highesty = child.y;
+                    }
+                });
+                score = highesty;
+                console.log(score);
+            }, 1500)
+
+            cam.setZoom(cam.zoom * 0.99)
         });
 
         // add physics
-        this.physics.add.collider(stackBlock, groundPlatform)
-        this.physics.add.collider(stackBlock, stackBlock)
+        this.physics.add.collider(stackBlock, groundPlatform, function(first, second)
+        {
+            // first is dynamic
+            // second is static
+
+            first.destroy();
+            // make new object that is static
+            groundPlatform.create(first.x, first.y, first.texture);
+        });
+        
+        
+
     }
-
-
 
     update()
     {
