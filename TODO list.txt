@@ -1,8 +1,8 @@
 16/03
-load all assets
-setup scene
-ping pong object 
-click drop object
+load all assets x
+setup scene x
+ping pong object x
+click drop object x
 checking score (based on height)
 
 17/03

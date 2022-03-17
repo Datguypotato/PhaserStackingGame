@@ -1,14 +1,20 @@
 import Phaser, { Physics } from 'phaser';
-import logoImg from './assets/logo.png';
-import pizzaBox from './assets/nyp-pizzabox.png';
 import platform from './assets/platform.png';
+import chickenwing from './assets/chickenwing.png';
+import hotdog from './assets/hotdog.png';
+import nypBox from './assets/nyp-box.png';
+import nypPizzabox from './assets/nyp-Pizzabox.png';
+import slicer from './assets/slicer.png';
+import pizzaSlice from './assets/sprite-pizza-slice.png';
+import statue from './assets/sprite-statue-of-liberty.png';
 
+var currentObject;
 var groundPlatform
 var inventoryBoxes = []
 var amount = 3;
 var current = 0;
 
-var stackBlock;
+var textureNames = ['chickenwing', "hotdog", "nyp-box", "nyp-pizzabox", "slicer", "sprite-pizza-slice", "sprite-statue-of-liberty"]
 class MyGame extends Phaser.Scene
 {    
 
@@ -17,63 +23,49 @@ class MyGame extends Phaser.Scene
         super();
     }
 
-    
-
     preload ()
     {
-        // load iamges
-        this.load.image('logo', logoImg);
-        this.load.image('pizzaBox', pizzaBox);
-        this.load.image('platform', platform);
-    }
-    
+        this.load.image(textureNames[0] , chickenwing);
+        this.load.image(textureNames[1] , hotdog);
+        this.load.image(textureNames[2] , nypBox);
+        this.load.image(textureNames[3] , nypPizzabox);
+        this.load.image(textureNames[4] , slicer);
+        this.load.image(textureNames[5] , pizzaSlice);
+        this.load.image(textureNames[6] , statue);
 
+        this.load.image('platform', platform)
+    }
     
     create ()
     {
         // create essentials stuff
-        var pBox = this.add.image(100, 100, 'pizzaBox');
+        var index = Math.floor(Math.random() * textureNames.length);
+        console.log(index);
+        currentObject = this.add.image(100, 100, textureNames[index]);
         var tween = this.tweens.add({
-            targets: pBox,
+            targets: currentObject,
             x: 700,
             duration: 2000,
             yoyo: true,
             repeat: -1
         });
+        
         groundPlatform = this.physics.add.staticGroup();
         groundPlatform.create(400, 550, 'platform');
 
         var stackBlock = this.physics.add.group();
-
-
-        // populate array
-        for(var i = 0; i < amount; i++)
-        {
-            inventoryBoxes[i] = 'pizzaBox';
-        }
-
-
-        
+        var phy = this.physics;
         // input
-        var phy = this.physics
         this.input.on('pointerdown', function()
         {
-            //tween.stop();
+            stackBlock.create(currentObject.x, currentObject.y, currentObject.texture);
+            currentObject.setTexture(textureNames[Math.floor(Math.random() * textureNames.length)]);
 
-            if(current > inventoryBoxes.length)
-            {
-                console.log("Reached max")
-                return;
-            }
-
-            stackBlock.create(pBox.x, pBox.y, 'pizzaBox')
-
-
-            current++;
+            phy.add.collider(stackBlock, stackBlock);
+            
         });
 
         // add physics
-        this.physics.add.collider(pBox, platform);
         this.physics.add.collider(stackBlock, groundPlatform)
         this.physics.add.collider(stackBlock, stackBlock)
     }
