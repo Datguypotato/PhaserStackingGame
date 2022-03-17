@@ -10,7 +10,7 @@ import statue from './assets/sprite-statue-of-liberty.png';
 
 var currentObject;
 var groundPlatform;
-var score;
+var score = 0;
 var amount = 0;
 
 var textureNames = ['chickenwing', "hotdog", "nyp-box", "nyp-pizzabox", "slicer", "sprite-pizza-slice", "sprite-statue-of-liberty"]
@@ -67,21 +67,6 @@ class MyGame extends Phaser.Scene
 
             phy.add.collider(stackBlock, stackBlock);
 
-            setTimeout(function ()
-            {
-                var highesty = 0;
-
-                stackBlock.children.each(function (child)
-                {
-                    if(highesty < child.y)
-                    {
-                        highesty = child.y;
-                    }
-                });
-                score = highesty;
-                console.log(score);
-            }, 1500)
-
             cam.setZoom(cam.zoom * 0.99)
         });
 
@@ -94,15 +79,17 @@ class MyGame extends Phaser.Scene
             first.destroy();
             // make new object that is static
             groundPlatform.create(first.x, first.y, first.texture);
-        });
-        
-        
 
+            if(first.x > score)
+            {
+                score = first.x;
+            }
+            console.log(score);
+        });
     }
 
     update()
     {
-        //pBox.x = Phaser.Math.Easing.Sine()
     }
 
 }

@@ -3,7 +3,7 @@ load all assets x
 setup scene x
 ping pong object x
 click drop object x
-checking score (based on height)
+checking score (based on height) x
 
 17/03
 Setup start screen
