@@ -32,10 +32,9 @@
       <br />
       <button type="button" onclick="Register()">Register</button>
     </form>
-    <div id="game" style="display: none;"></div>
+    <div id="game" style="display: none"></div>
 
     <script>
-
       function Start() {
         document.getElementById("parentStart").style.display = "none";
         document.getElementById("parentRegister").style.display = "inline";
@@ -60,7 +59,7 @@
         }
         console.log("register button");
         document.getElementById("parentRegister").style.display = "none";
-        document.getElementById("game").style.display = "inline"
+        document.getElementById("game").style.display = "inline";
       }
     </script>
   </body>
