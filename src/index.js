@@ -11,13 +11,13 @@ import statue from "./assets/sprite-statue-of-liberty.png";
 var currentObject;
 var groundPlatform;
 var score = 0;
-var amount = 0;
+var amount = 0; // debug puposes
 var scoreText;
 
-var totalTime = 1000; // in ms
+var totalTime = 30000; // in ms
 var timerText;
 var timer;
-var isGameover = false
+var isGameover = false;
 
 var tweenX = 700;
 var tweenY = 100;
@@ -85,10 +85,10 @@ class MyGame extends Phaser.Scene {
       fill: "#f5ffff",
     });
 
-    gameoverText = this.add.text(320, 300, "", {
-        fontSize: "32px",
-        fill: "#f5ffff",
-      });
+    gameoverText = this.add.text(320, 150, "", {
+      fontSize: "32px",
+      fill: "#f5ffff",
+    });
 
     scoreText.setScrollFactor(0, 0);
     timerText.setScrollFactor(0, 0);
@@ -102,8 +102,7 @@ class MyGame extends Phaser.Scene {
     // TODO add delay
     // input
     this.input.on("pointerdown", function () {
-        if(isGameover)
-        return;
+      if (isGameover) return;
       var newObject = stackBlock.create(
         currentObject.x,
         currentObject.y - offset,
@@ -153,7 +152,6 @@ class MyGame extends Phaser.Scene {
       }
     );
 
-    var currentScene = this.scene;
     timer = this.time.addEvent({
       delay: totalTime,
       loop: false,
@@ -161,15 +159,14 @@ class MyGame extends Phaser.Scene {
       callback: function () {
         // show score and/or highscore
         var localScore = localStorage.getItem("Highscore");
-        var highscoreText = ""
+        var highscoreText = "";
         console.log("Local storage: " + localScore);
-        if(localScore == null || parseInt(localScore) < score)
-        {
-            console.log("new high score!")
-            localStorage.setItem("Highscore", score.toString())
-            highscoreText = "new highscore!"
+        if (localScore == null || parseInt(localScore) < score) {
+          console.log("new high score!");
+          localStorage.setItem("Highscore", score.toString());
+          highscoreText = "new highscore!";
         }
-        gameoverText.setText("Gameover \n" + highscoreText)
+        gameoverText.setText("Gameover \n" + highscoreText);
 
         tween.stop();
         isGameover = true;
