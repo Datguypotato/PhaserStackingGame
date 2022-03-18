@@ -85,7 +85,7 @@ class MyGame extends Phaser.Scene {
       fill: "#f5ffff",
     });
 
-    gameoverText = this.add.text(320, 300, "Game over", {
+    gameoverText = this.add.text(320, 300, "", {
         fontSize: "32px",
         fill: "#f5ffff",
       });
